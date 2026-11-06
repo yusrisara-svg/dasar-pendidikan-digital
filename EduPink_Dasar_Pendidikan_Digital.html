@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduPink — Dasar Pendidikan Digital</title>
+<style>
+:root{--pink:#e879ad;--deep:#a34478;--pale:#fff3f9;--soft:#f9d9e9;--ink:#673653;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:linear-gradient(125deg,#f4b5d5,#ffe5f1);padding:22px max(18px,calc((100% - 1000px)/2));display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-size:13px;font-weight:900;letter-spacing:2px;color:var(--deep)}header h1{font-size:clamp(22px,4vw,32px);margin:3px 0;font-weight:900}header .bow{font-size:48px}
+main{max-width:1000px;margin:auto;padding:18px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 18px}
+nav button,.btn{border:0;border-radius:22px;padding:10px 15px;background:#f8dce9;color:var(--deep);font-weight:750;cursor:pointer}
+nav button.active,.btn.primary{background:var(--pink);color:white}
+.hero{border-radius:22px;background:linear-gradient(135deg,#f3b4d5,#ffe8f3);padding:24px;margin-bottom:16px}
+.hero h2{font-size:clamp(24px,4vw,36px);line-height:1.2;margin:8px 0;color:#813d65}
+.hero p{max-width:650px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.card{background:white;border:1px solid #f5d6e6;border-radius:18px;padding:17px;margin-bottom:13px}
+.card h3{margin:0 0 8px}.icon{font-size:30px}.muted{color:#a0718e;font-size:13px}
+section{display:none}section.active{display:block}
+.module{display:flex;align-items:center;gap:12px;text-align:left;width:100%;background:#fff;border:1px solid #f4d4e5;border-radius:15px;padding:14px;margin:8px 0;color:var(--ink);cursor:pointer}
+.module:hover{background:#fff8fc}.module .icon{background:#fce5f1;padding:9px;border-radius:12px}
+.answer{display:block;width:100%;text-align:left;background:#fff8fc;border:1px solid #f1c9df;border-radius:12px;padding:12px;margin:8px 0;color:var(--ink);cursor:pointer}
+.answer:disabled{cursor:default}.answer.correct{background:#e4f7e9;border-color:#91d6a5}.answer.wrong{background:#ffe3e9;border-color:#ef9ab1}
+#lesson{margin-top:12px}.tag{display:inline-block;background:#fce4f0;color:#a34478;border-radius:20px;padding:4px 10px;font-size:12px;font-weight:800}
+.progress{height:9px;background:#f5dce9;border-radius:20px;overflow:hidden}.progress span{display:block;height:100%;background:var(--pink);width:0}
+footer{text-align:center;color:#b17b9b;font-size:12px;padding:20px}
+@media(min-width:700px){.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">✿ EDUPINK</div><h1>Dasar Pendidikan Digital</h1><div>Belajar digital dengan ceria 🌸</div></div><div class="bow">🎀</div></header>
+<main>
+<nav aria-label="Navigasi"><button class="active" data-page="home">🏠 Utama</button><button data-page="modules">📚 Modul</button><button data-page="quiz">📝 Kuiz</button><button data-page="about">💗 Info</button></nav>
+<section id="home" class="active">
+<div class="hero"><span class="tag">SELAMAT DATANG!</span><h2>Jom terokai dunia digital ✨</h2><p>Kenali Dasar Pendidikan Digital Malaysia melalui nota ringkas dan kuiz interaktif. Bina kemahiran digital dengan bijak, selamat dan bertanggungjawab.</p><button class="btn primary" onclick="showPage('modules')">Mula belajar →</button></div>
+<div class="grid">
+<div class="card"><div class="icon">🎓</div><h3>6 Teras</h3><p class="muted">Kenali fokus dasar pendidikan digital.</p></div>
+<div class="card"><div class="icon">💡</div><h3>Nota Ringkas</h3><p class="muted">Isi pembelajaran mudah difahami.</p></div>
+<div class="card"><div class="icon">📝</div><h3>Kuiz Interaktif</h3><p class="muted">Uji pengetahuan dan lihat markah.</p></div>
+<div class="card"><div class="icon">🔐</div><h3>Etika Digital</h3><p class="muted">Belajar menggunakan teknologi dengan selamat.</p></div>
+</div>
+</section>
+<section id="modules"><div class="card"><h2>📚 Modul Pembelajaran</h2><p>Pilih modul untuk membaca nota.</p><div id="moduleList"></div></div><div class="card" id="lesson"><h3>🌷 Pilih satu modul</h3><p>Nota modul akan dipaparkan di sini.</p></div></section>
+<section id="quiz"><div class="card"><span class="tag">MINI KUIZ EDUPINK</span><h2 id="qtitle">Soalan 1 / 5</h2><div class="progress"><span id="bar"></span></div><p id="question" style="margin-top:18px"></p><div id="answers"></div><p id="feedback" aria-live="polite"></p><button class="btn primary" id="next" style="display:none">Soalan seterusnya →</button><div id="result" style="display:none"></div><button class="btn primary" id="restart" style="display:none">Cuba lagi ↻</button></div></section>
+<section id="about"><div class="card"><h2>💗 Tentang EduPink</h2><p>EduPink ialah aplikasi pembelajaran web bertema pink yang memperkenalkan Dasar Pendidikan Digital dengan pendekatan mesra dan interaktif.</p><h3>Objektif aplikasi</h3><ul><li>Memahami kepentingan pendidikan digital.</li><li>Mengetahui enam teras dasar.</li><li>Meningkatkan literasi digital.</li><li>Menggalakkan amalan teknologi beretika.</li></ul><p class="muted">Rujukan kandungan: Dasar Pendidikan Digital, Kementerian Pendidikan Malaysia. Nota ini ialah ringkasan pembelajaran.</p></div></section>
+<footer>🌸 EDUPINK • BELAJAR DENGAN CERIA 🌸</footer>
+</main>
+<script>
+const lessons=[
+['🎓','Murid Fasih Digital','Murid menguasai kemahiran menggunakan teknologi digital, mencari dan menilai maklumat, berkomunikasi serta menghasilkan kandungan digital dengan selamat dan beretika.'],
+['👩‍🏫','Pendidik Kompeten Digital','Guru meningkatkan kompetensi digital untuk menyampaikan pengajaran kreatif, interaktif dan berkesan serta mengintegrasikan teknologi dalam pembelajaran.'],
+['👑','Pemimpin Pendidikan Digital','Pemimpin pendidikan memacu perubahan, memberi bimbingan dan menyokong pelaksanaan pendidikan digital di institusi masing-masing.'],
+['💻','Infrastruktur dan Infostruktur','Kemudahan peranti, capaian internet, platform dan sistem digital yang sesuai, stabil dan selamat menyokong pembelajaran.'],
+['📚','Kandungan Digital Berkualiti','Bahan pembelajaran digital yang berkualiti, relevan, menarik, mudah dicapai dan memenuhi keperluan murid serta pendidik.'],
+['🤝','Rakan Strategik','Kerjasama kerajaan, sekolah, ibu bapa, komuniti dan industri membantu memperkukuh ekosistem pendidikan digital.']
+];
+const list=document.getElementById('moduleList');
+lessons.forEach((l,i)=>{const b=document.createElement('button');b.className='module';b.innerHTML=`<span class="icon">${l[0]}</span><span><b>${i+1}. ${l[1]}</b><br><small class="muted">Tekan untuk baca nota →</small></span>`;b.onclick=()=>{document.getElementById('lesson').innerHTML=`<span class="tag">TERAS ${i+1} DARIPADA 6</span><h3 style="margin-top:12px">${l[0]} ${l[1]}</h3><p>${l[2]}</p>`};list.appendChild(b)});
+function showPage(p){document.querySelectorAll('main section').forEach(s=>s.classList.toggle('active',s.id===p));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));if(p==='quiz'&&!started)startQuiz()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+const qs=[
+['Apakah tujuan utama Dasar Pendidikan Digital?',['Menghapuskan teknologi','Melahirkan generasi fasih digital','Mengurangkan pembelajaran','Menggantikan semua guru'],1],
+['Siapakah yang perlu kompeten digital?',['Pendidik','Murid sahaja','Ibu bapa sahaja','Tiada siapa'],0],
+['Apakah contoh infrastruktur digital?',['Buku nota','Papan hitam','Rangkaian internet dan peranti','Pensel'],2],
+['Bagaimanakah murid menggunakan teknologi dengan baik?',['Menyebarkan maklumat palsu','Mengabaikan keselamatan','Berkongsi kata laluan','Mengamalkan etika digital'],3],
+['Apakah kepentingan kandungan digital berkualiti?',['Membantu pembelajaran','Mengelirukan murid','Menghalang akses','Mengurangkan ilmu'],0]
+];let qi=0,score=0,answered=false,started=false;
+function startQuiz(){started=true;qi=0;score=0;document.getElementById('result').style.display='none';document.getElementById('restart').style.display='none';renderQ()}
+function renderQ(){answered=false;let q=qs[qi];document.getElementById('qtitle').textContent=`Soalan ${qi+1} / ${qs.length}`;document.getElementById('bar').style.width=(qi/qs.length*100)+'%';document.getElementById('question').textContent=q[0];document.getElementById('feedback').textContent='';document.getElementById('next').style.display='none';let box=document.getElementById('answers');box.innerHTML='';q[1].forEach((txt,i)=>{let b=document.createElement('button');b.className='answer';b.textContent=String.fromCharCode(65+i)+'. '+txt;b.onclick=()=>{if(answered)return;answered=true;let correct=i===q[2];if(correct)score++;b.classList.add(correct?'correct':'wrong');if(!correct)box.children[q[2]].classList.add('correct');document.getElementById('feedback').textContent=correct?'🌸 Betul! Tahniah!':'💗 Belum tepat. Jawapan: '+q[1][q[2]];[...box.children].forEach(x=>x.disabled=true);document.getElementById('next').style.display='inline-block';document.getElementById('next').textContent=qi===qs.length-1?'Lihat keputusan →':'Soalan seterusnya →'};box.appendChild(b)})}
+document.getElementById('next').onclick=()=>{qi++;if(qi<qs.length)renderQ();else{document.getElementById('bar').style.width='100%';document.getElementById('qtitle').textContent='Kuiz selesai! 🎉';document.getElementById('question').textContent='Terima kasih kerana mencuba kuiz EduPink.';document.getElementById('answers').innerHTML='';document.getElementById('feedback').textContent='';document.getElementById('next').style.display='none';let r=document.getElementById('result');r.style.display='block';r.innerHTML=`<h2>🌷 Markah anda: ${score}/${qs.length}</h2><p>${score===qs.length?'Hebat! Semua jawapan betul!':score>=3?'Bagus! Teruskan belajar.':'Jangan putus asa. Ulang kaji modul dan cuba lagi!'}</p>`;document.getElementById('restart').style.display='inline-block'}};
+document.getElementById('restart').onclick=startQuiz;
+</script>
+</body></html>
